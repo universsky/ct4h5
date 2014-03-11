@@ -1,0 +1,85 @@
+WebDriver测试失败后自动获取截图
+  
+ 
+UI自动化测试其实并不是那么稳定，可能是因为UI元素的改动，也可能是因为网络的不稳定，在测试失败的时候，WebDriver通常会抛出一些异常；通过异常信息通常都能知道大概是哪里出错了，但是如果能加上截屏，那就更加好了。尤其是用Remote WebDriver运行测试，所有测试都是通过Selenium Grid分发到各个节点来运行，不同节点的配置还有可能不是完全一样。
+
+如果是使用RemoteWebDriver的话，它提供了一个很好的功能，就是会把运行测试发生异常时候的截图也放到异常里面，具体可以参考RemoteWebDriver的简介。代码很简单：
+
+public String extractScreenShot(WebDriverException e) {
+    Throwable cause = e.getCause();
+    if (cause instanceof ScreenshotException) {
+        return ((ScreenshotException) cause).getBase64EncodedScreenshot();
+    }
+    return null;
+}
+怎么样才能在异常发生的时候自动把异常抓住呢？简单来说就是要对写测试代码的人是透明了，在写测试代码的时候不需要特别去处理异常。这里需要实现WebDriverEventListener接口，然后把RemoteWebDriver对象和实现WebDriverEventListener接口的对象包到一起，实例化一个EventFiringWebDriver对象。之后的事情就跟用一个普通的RemoteWebDriver对象没有任何区别。
+
+实现WebDriverEventListener接口的一个例子：
+
+public class MyEventListener implements WebDriverEventListener {
+    public void onException(Throwable ex, WebDriver arg1) {
+        String filename = generateRandomFilename(ex);
+        try {
+            byte[] btDataFile = Base64.decodeBase64(extractScreenShot(ex).getBytes());
+            File of = new File(filename);
+            FileOutputStream osf = new FileOutputStream(of);
+            osf.write(btDataFile);
+            osf.flush();
+            osf.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+ 
+    private String generateRandomFilename(Throwable ex) {
+        Calendar c = Calendar.getInstance();
+        String filename = ex.getMessage();
+        int i = filename.indexOf('\n');
+        filename = filename.substring(0, i).replaceAll("\\s", "_")
+                    .replaceAll(":", "")
+                    + ".png";
+                    filename = "" + c.get(Calendar.YEAR) + "-" + c.get(Calendar.MONTH)
+                    + "-" + c.get(Calendar.DAY_OF_MONTH) + "-"
+                    + c.get(Calendar.HOUR_OF_DAY) + "-" + c.get(Calendar.MINUTE)
+                    + "-" + c.get(Calendar.SECOND) + "-" + filename;
+        return filename;
+    }
+ 
+    private String extractScreenShot(Throwable ex) {
+        Throwable cause = ex.getCause();
+        if (cause instanceof ScreenshotException) {
+            return ((ScreenshotException) cause).getBase64EncodedScreenshot();
+        }
+        return null;
+    }
+ 
+    @Override
+    public void afterChangeValueOf(WebElement arg0, WebDriver arg1) {
+    // TODO Auto-generated method stub
+ 
+    }
+}
+实例化一个EventFiringWebDriver对象：
+
+@Test
+public void setup(){
+    String remote_driver_url = "http://localhost:4444/wd/hub";
+    DesiredCapabilities capability = null;
+    capability = DesiredCapabilities.firefox();
+    WebDriverEventListener eventListener = new MyEventListener();
+    WebDriver driver = new EventFiringWebDriver(new RemoteWebDriver(new URL(
+                    remote_driver_url), capability)).register(eventListener);
+}
+之后如果测试遇到任何异常，都会在basedir（这个是要自己配置的）下面生成一个类似这样的png截图（2011-7-22-20-55-9-Element_is_not_currently_visible_and_so_may_not_be_interacted_with.png）。
+
+这些代码段演示了如何使用WebDriverEventListener接口以及EventFiringWebDriver类，实现监听测试中所抛出的异常，并且把异常里面附带的截图保存为png文件。
+
+参考博客：Generating a screen capture on exception thrown with Selenium 2
+
+Related posts:
+
+NMock2入门经验
+WebDriver + TestNG 应用
+在VSTS中创建Web Test的插件
+用XSD自动生成XML对应的.NET实体类
+WebDriver配置Firefox代理服务器
