@@ -123,7 +123,6 @@ public class NineTest extends TestCase {
 		// driver = new AndroidDriver(new URL("http://localhost:" + port
 		// + "/wd/hub"), DesiredCapabilities.android());
 		driver = new AndroidDriver();
-
 		// String[] c = { "_m_h5_tk",
 		// "1bd4e8d6d8d5495cc98898818056be0e_1393315222267",
 		// "m_h5_tk_enc", "f3154d21b657a0761365e37d99fc40e2",
@@ -157,21 +156,20 @@ public class NineTest extends TestCase {
 		/**
 		 * 打开首页
 		 */
-		driver.get(Const.urlEtaoOnline);// 线上
-		// driver.get(Const.urlPre); // 预发
-
+		// driver.get(Const.urlEtaoOnline);// 线上
+		driver.get(Const.urlEtaoPre); // 预发
 		Util.record(driver, deviceId);
 
-		// /**
-		// * 关闭首页pop浮层:有时候会直接出发点击到了搜索icon,跳到搜索页了
-		// */
-		Util.click(driver, "//A[3]");
-		Util.record(driver, deviceId);
-		Set<Cookie> cookies = driver.manage().getCookies();
-		System.out.println(cookies.size() + " | " + cookies);
-		for (Cookie c : cookies) {
-			System.out.println(c);
-		}
+		// // /**
+		// // * 关闭首页pop浮层:有时候会直接出发点击到了搜索icon,跳到搜索页了
+		// // */
+		// Util.click(driver, "//A[3]");
+		// Util.record(driver, deviceId);
+		// Set<Cookie> cookies = driver.manage().getCookies();
+		// System.out.println(cookies.size() + " | " + cookies);
+		// for (Cookie c : cookies) {
+		// System.out.println(c);
+		// }
 		// driver.get(Const.urlOnline);
 		// driver.get(Const.urlPre);// 这样会直接导致webdriver退出 ？
 		/* 以上是公共启动区域 */
@@ -180,41 +178,36 @@ public class NineTest extends TestCase {
 		 * 点击9.9包邮,进入Goods Grid List页
 		 */
 		Util.click(driver, "//DIV[1]/UL[1]/LI[3]/A[1]/IMG[1]");
-		// driver.get("http://wapa.etao.com/index.php#!free99.php");
-		// driver.get("http://m.etao.com/index.php#!free99.php");
+
+		// driver.get(Const.free99PreUrl);
 		/**
 		 * 考虑加载数据，渲染页面时间
 		 */
-		Thread.sleep(5000);
+		Util.sleep();
 		Util.record(driver, deviceId);
 
+		// /**
+		// * 点击页面上的“返回”回到首页
+		// */
+		// Util.click(driver, "//A[@id=\"J_Back\"]/B[1]");
+		// Util.record(driver, deviceId);
 		/**
-		 * 点击页面上的“返回”回到首页
+		 * 进入详情页 //LI[1]/A[1]/DIV[1]/IMG[1]
 		 */
-		Util.click(driver, "//A[@id=\"J_Back\"]/B[1]");
+		Util.click(driver, "//LI[1]/A[1]/DIV[1]/IMG[1]");
 		Util.record(driver, deviceId);
 
-		/**
-		 * 点击9.9包邮,进入Goods Grid List页
-		 */
-		Util.click(driver, "//DIV[1]/UL[1]/LI[3]/A[1]/IMG[1]");
-		// driver.get("http://wapa.etao.com/index.php#!free99.php");
-		// driver.get("http://m.etao.com/index.php#!free99.php");
-		/**
-		 * 考虑加载数据，渲染页面时间
-		 */
-		Thread.sleep(5000);
+		driver.getTouch().move(0, 800);
 		Util.record(driver, deviceId);
-
-		/**
-		 * 点击“下一页” //DIV[@id="free99_list"]/DIV[1]/A[2]
-		 */
-		Util.click(driver, "//DIV[@id=\"free99_list\"]/DIV[1]/A[2]");
-		Thread.sleep(3000);
-		Util.record(driver, deviceId);
-		assert (driver.findElementByXPath(
-				"//DIV[@id=\"free99_list\"]/DIV[1]/A[2]").getText()
-				.contains("下一页"));
+		// /**
+		// * 点击“下一页” //DIV[@id="free99_list"]/DIV[1]/A[2]
+		// */
+		// Util.click(driver, "//DIV[@id=\"free99_list\"]/DIV[1]/A[2]");
+		// Thread.sleep(3000);
+		// Util.record(driver, deviceId);
+		// assert (driver.findElementByXPath(
+		// "//DIV[@id=\"free99_list\"]/DIV[1]/A[2]").getText()
+		// .contains("下一页"));
 
 	}
 

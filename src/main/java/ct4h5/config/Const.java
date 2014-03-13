@@ -11,11 +11,11 @@ public class Const {
 	/**
 	 * 预发首页地址
 	 */
-	final public static String urlEtaoPre = "http://wapa.etao.com/";
+	final public static String urlEtaoPre = "http://wapa.etao.com/?mode=pre#!/entry/index.php?hidepop=true";
 	/**
 	 * 线上首页地址
 	 */
-	final public static String urlEtaoOnline = "http://m.etao.com/";
+	final public static String urlEtaoOnline = "http://m.etao.com/entry.php?hidepop=true";
 
 	/**
 	 * 预发首页地址
@@ -34,6 +34,7 @@ public class Const {
 	 * Test类所在的package路径
 	 */
 	final public static String packageEtaoH5Path = "ct4etaoh5.test";
+	final public static String packageEtaoH5PathC = "ct4etaoh5.testc";
 	final public static String packageTaobaoH5Path = "ct4taobaoh5.test";
 	public static String timestamp = (new SimpleDateFormat("yyyyMMddhhmmss"))
 			.format(new Date());
@@ -50,5 +51,9 @@ public class Const {
 
 	public static StringBuffer report = new StringBuffer("<table border=\"0\">"
 			+ "<tr><th width=\"80\" scope=\"col\">deviceId</th>");
+	public static String searchOnlineUrl = "http://m.etao.com/#!search_index.php?hidepop=true";
+	public static String searchPreUrl = "http://wapa.etao.com/?mode=pre#!/search/index.php?hidepop=true";
 
+	public static String free99OnlineUrl = "http://m.etao.com/index.php#!free99.php?hidepop=true";
+	public static String free99PreUrl = "http://wapa.etao.com/?mode=pre#!/free99/index.php?hidepop=true";
 }

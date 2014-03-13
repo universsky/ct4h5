@@ -21,9 +21,7 @@ public class TestRunner {
 	 * @throws Exception
 	 */
 	public static void main(String[] args) throws Exception {
-
 		run();
-
 	}
 
 	/**
@@ -56,7 +54,8 @@ public class TestRunner {
 	 * 
 	 */
 	private static void runTestCases() throws Exception {
-		List<String> classList = Util.getClassInPackage(Const.packageEtaoH5Path);
+		List<String> classList = Util
+				.getClassInPackage(Const.packageEtaoH5Path);
 		for (String c : classList) {
 			if (c.endsWith("Test")) {
 				runClass(c);

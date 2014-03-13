@@ -124,17 +124,17 @@ public class SearchTest extends TestCase {
 		/**
 		 * 首次打开“首页”
 		 */
-		driver.get(Const.urlEtaoOnline);// 线上
-		// driver.get(Const.urlPre);//预发
+		// driver.get(Const.urlEtaoOnline);// 线上
+		driver.get(Const.urlEtaoPre);// 预发
 		Util.record(driver, deviceId);
 
-		/**
-		 * 关闭首页pop浮层,有时候会直接出发点击到了搜索icon,跳到搜索页了?如何解决？
-		 */
-		Thread.sleep(3000);
-		Util.click(driver, "//A[3]");
-		Util.record(driver, deviceId);
-		Thread.sleep(3000);
+		// /**
+		// * 关闭首页pop浮层,有时候会直接出发点击到了搜索icon,跳到搜索页了?如何解决？
+		// */
+		// Thread.sleep(3000);
+		// Util.click(driver, "//A[3]");
+		// Util.record(driver, deviceId);
+		// Thread.sleep(3000);
 		// if (!driver.getCurrentUrl().equals(Const.urlPre)
 		// || !driver.getCurrentUrl().equals(Const.urlPre + "#!entry.php")) {
 		// driver.get(Const.urlPre);
@@ -143,13 +143,18 @@ public class SearchTest extends TestCase {
 		/**
 		 * 点击搜索icon "//SECTION[1]/DIV[2]/A[1]",进入搜索页
 		 */
-		Util.click(driver, "//SECTION[1]/DIV[2]/A[1]");
-		Thread.sleep(2000);
-		if (!driver.getCurrentUrl().equals(
-				"http://wapa.etao.com/#!search_index.php")) {
-			driver.get("http://wapa.etao.com/#!search_index.php");
-		}
-		Thread.sleep(1000);
+		// Util.click(driver, "//SECTION[1]/DIV[2]/A[1]");
+		driver.findElementByCssSelector(
+				"SECTION:nth-of-type(1)>DIV:nth-of-type(2)>A:nth-of-type(1)")
+				.click();
+
+		driver.get(Const.searchPreUrl);
+		Util.sleep();
+		// if (!driver.getCurrentUrl().equals(
+		// "http://wapa.etao.com/#!search_index.php")) {
+		// driver.get("http://wapa.etao.com/#!search_index.php");
+		// }
+		// Thread.sleep(1000);
 		Util.record(driver, deviceId);
 
 		/**
@@ -166,52 +171,58 @@ public class SearchTest extends TestCase {
 		// e.submit();// 提交搜索
 		e.sendKeys(Keys.ENTER);
 		/**
-		 * 5s等待SRP加载渲染出来
+		 * 2s等待SRP加载渲染出来
 		 */
-		Thread.sleep(5000);
+		Util.sleep();
 		Util.record(driver, deviceId);
-		/**
-		 * SRP页，点击"筛选"
-		 * //DIV[@id="angela-view-2"]/DIV[1]/SECTION[1]/DIV[1]/DIV[1]
-		 * /DIV[1]/DIV[2]/A[2]
-		 */
-		Util.click(
-				driver,
-				"//DIV[@id=\"angela-view-2\"]/DIV[1]/SECTION[1]/DIV[1]/DIV[1]/DIV[1]/DIV[2]/A[2]");
-		Util.record(driver, deviceId);
-		/**
-		 * 点击商家“京东”"//DIV[2]/DIV[1]/DIV[1]/UL[1]/LI[2]"
-		 */
-		Util.click(driver, "//DIV[2]/DIV[1]/DIV[1]/UL[1]/LI[2]");
-		Util.record(driver, deviceId);
-		/**
-		 * 点击"确定" //DIV[1]/DIV[1]/A[2]
-		 */
-		Util.click(driver, "//DIV[1]/DIV[1]/A[2]");
-		Util.record(driver, deviceId);
-		/**
-		 * 验证筛选结果
-		 */
-		e = driver.findElementByXPath("//LI[1]/UL[1]/LI[4]/SPAN[1]");
-
-		assert (e.getText().contains("京东商城"));
-		/**
-		 * 点击"价格"排序
-		 */
-		driver.findElementByCssSelector("DIV:nth-of-type(3)>A:nth-of-type(1)")
-				.click();
-		Util.record(driver, deviceId);
-
-		/**
-		 * 点击"大小图切换"
-		 */
-		Util.click(driver, "//DIV[4]/SPAN[1]/I[1]");
-		Util.record(driver, deviceId);
-		/**
-		 * 点击"大小图切换"
-		 */
-		Util.click(driver, "//DIV[4]/SPAN[1]/I[1]");
-		Util.record(driver, deviceId);
+		// /**
+		// * SRP页，点击"筛选"
+		// * //DIV[@id="angela-view-2"]/DIV[1]/SECTION[1]/DIV[1]/DIV[1]
+		// * /DIV[1]/DIV[2]/A[2]
+		// */
+		// Util.click(driver,
+		// "//DIV[1]/SECTION[1]/DIV[1]/DIV[1]/DIV[1]/DIV[2]/A[2]");
+		// Util.record(driver, deviceId);
+		// /**
+		// * 点击商家“京东”"//DIV[2]/DIV[1]/DIV[1]/UL[1]/LI[2]"
+		// */
+		// Util.click(driver, "//DIV[2]/DIV[1]/DIV[1]/UL[1]/LI[2]");
+		// Util.record(driver, deviceId);
+		// /**
+		// * 点击"确定" //DIV[1]/DIV[1]/A[2]
+		// */
+		// Util.click(driver, "//DIV[1]/DIV[1]/A[2]");
+		// Util.record(driver, deviceId);
+		// /**
+		// * 验证筛选结果
+		// */
+		// e = driver.findElementByXPath("//LI[1]/UL[1]/LI[4]/SPAN[1]");
+		//
+		// assert (e.getText().contains("京东商城"));
+		// /**
+		// * 点击"价格"排序
+		// */
+		// driver.findElementByCssSelector("DIV:nth-of-type(3)>A:nth-of-type(1)")
+		// .click();
+		// Util.record(driver, deviceId);
+		//
+		// /**
+		// * 销量
+		// */
+		//
+		// Util.click(driver,
+		// "//DIV[@id=\"angela-view-4\"]/DIV[1]/DIV[1]/DIV[1]/DIV[2]/A[1]");
+		// Util.record(driver, deviceId);
+		// /**
+		// * 点击"大小图切换"
+		// */
+		// Util.click(driver, "//DIV[4]/SPAN[1]/I[1]");
+		// Util.record(driver, deviceId);
+		// /**
+		// * 点击"大小图切换"
+		// */
+		// Util.click(driver, "//DIV[4]/SPAN[1]/I[1]");
+		// Util.record(driver, deviceId);
 
 	}
 

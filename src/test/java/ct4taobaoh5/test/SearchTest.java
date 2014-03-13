@@ -126,7 +126,7 @@ public class SearchTest extends TestCase {
 		 */
 		driver.get(Const.urlTaobaoOnline);// 线上
 		// driver.get(Const.urlPre);//预发
-		Thread.sleep(2000);
+		Util.sleep();
 		Util.record(driver, deviceId);
 
 		/**
@@ -147,20 +147,20 @@ public class SearchTest extends TestCase {
 		/**
 		 * 2s等待SRP加载渲染出来
 		 */
-		Thread.sleep(2000);
+		Util.sleep();
 		Util.record(driver, deviceId);
 
 		/**
 		 * 点击“分类”
 		 */
 		Util.click(driver, "//SPAN[@id=\"J_selt\"]");
-		Thread.sleep(1000);
+		Util.sleep();
 		Util.record(driver, deviceId);
 
 		/**
 		 * 子类目可点击
 		 */
-		Thread.sleep(1000);
+		Util.sleep();
 		Util.click(driver, "//LI[1]/H2[1]");
 		Util.record(driver, deviceId);
 
@@ -171,7 +171,7 @@ public class SearchTest extends TestCase {
 		 */
 		driver.get(Const.urlTaobaoOnline);// 线上
 		// driver.get(Const.urlPre);//预发
-		Thread.sleep(2000);
+		Util.sleep();
 		Util.record(driver, deviceId);
 
 		/**
@@ -191,7 +191,7 @@ public class SearchTest extends TestCase {
 		/**
 		 * 2s等待SRP加载渲染出来
 		 */
-		Thread.sleep(2000);
+		Util.sleep();
 		Util.record(driver, deviceId);
 
 		/**

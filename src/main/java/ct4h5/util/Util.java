@@ -118,10 +118,16 @@ public class Util {
 		/**
 		 * 考虑到页面加载的时间，线程延时2s
 		 */
-		Thread.sleep(2000);
+
 		printTitle(driver, deviceId);
 		// GenerateImage(driver, deviceId);
 		screenShot(driver, deviceId);
+		sleep();
+	}
+
+	public static void sleep() {
+		for (int i = 0; i < 2e9; i++) {
+		}
 	}
 
 	/**
@@ -157,7 +163,7 @@ public class Util {
 		// driver.getTouch().down(x, y);
 		driver.findElement(By.xpath(xPath)).click();
 		// driver.wait();// 报错：java.lang.IllegalMonitorStateException
-		Thread.sleep(1000);
+		sleep();
 	}
 
 	/**
@@ -170,7 +176,7 @@ public class Util {
 		File scrFile = ((TakesScreenshot) driver)
 				.getScreenshotAs(OutputType.FILE);
 		try {
-			FileUtils.copyFile(scrFile, new File("c:\\Learning\\" + imgName));
+			FileUtils.copyFile(scrFile, new File("D:\\img\\" + imgName));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
