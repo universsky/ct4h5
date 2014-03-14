@@ -6,6 +6,8 @@ package ct4h5.report;
 import java.io.IOException;
 import java.net.MalformedURLException;
 
+import ct4h5.config.Const;
+
 /**
  * @author 东海陈光剑 2014年3月2日 下午8:07:45
  */
@@ -56,8 +58,7 @@ public class GenerateReport {
 		 */
 		if (java.awt.Desktop.isDesktopSupported()) {
 			try {
-				String reportUriStr = "http://10.73.72.122:88/report.html?run_stamp="
-						+ run_stamp;
+				String reportUriStr = Const.reportPath + run_stamp;
 				// 创建一个URI实例
 				java.net.URI reportUri = java.net.URI.create(reportUriStr);
 
@@ -92,12 +93,8 @@ public class GenerateReport {
 		 */
 		if (java.awt.Desktop.isDesktopSupported()) {
 			try {
-				String reportUriStr = "http://10.73.72.122:88/report.html?run_stamp="
-						+ run_stamp
-						+ "&sec="
-						+ runningSec
-						+ "&min="
-						+ runningMin;
+				String reportUriStr = Const.reportPath + run_stamp + "&sec="
+						+ runningSec + "&min=" + runningMin;
 				// 创建一个URI实例
 				java.net.URI reportUri = java.net.URI.create(reportUriStr);
 

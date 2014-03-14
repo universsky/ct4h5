@@ -10,8 +10,6 @@ import ct4h5.Uninstall;
 import ct4h5.config.Const;
 import ct4h5.report.GenerateReport;
 import ct4h5.util.LThread;
-import ct4h5.util.MyCountDown;
-import ct4h5.util.OLSThread;
 import ct4h5.util.Util;
 
 /**
@@ -24,8 +22,8 @@ public class TestRunner {
 	 * @throws Exception
 	 */
 	public static void main(String[] args) throws Exception {
-
-		Go();
+		for (;;)
+			Go();
 
 	}
 

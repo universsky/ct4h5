@@ -3,8 +3,11 @@
  */
 package ct4etaoh5.testc;
 
+import java.net.MalformedURLException;
 import java.net.URL;
 
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.android.AndroidDriver;
 
 import ct4h5.Init;
@@ -31,43 +34,33 @@ public class TraverseUrlsTest implements Runnable {
 		 * forward tcp
 		 */
 		Init.init(deviceId, pcPort);
-
+		URL driverUrl;
+		try {
+			driverUrl = new URL("http://localhost:" + pcPort + "/wd/hub/");
+			driver = new AndroidDriver(driverUrl);
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void testUrls() throws Exception {
-		// URL driverUrl = new URL("http://localhost:8080/wd/hub/" + deviceId);
-		URL driverUrl = new URL("http://localhost:" + pcPort + "/wd/hub/");
-		driver = new AndroidDriver(driverUrl);
-
-		String[] urls = {
-				"http://m.etao.com/#!entry.php?hidepop=true",
-				"http://m.etao.com/#!feed.php?hidepop=true",
-				"http://m.etao.com/#!item.php?nid=341198388615335342&wpartnerid=undefined&hidepop=true",
-				"http://m.etao.com/#!usercenter.php?hidepop=true",
-				"http://m.etao.com/#!myetao.php?hidepop=true",
-				"http://m.etao.com/#!myquan.php?hidepop=true",
-				"http://m.etao.com/#!sign_only.php?hidepop=true",
-				"http://m.etao.com/#!free99.php?hidepop=true",
-				"http://m.etao.com/#!youhui.php?feedid=26184?hidepop=true",
-				"http://m.etao.com/#!search_index.php?hidepop=true",
-				"http://m.etao.com/#!search.php?q=iphone5s&hidepop=true",
-				"http://m.etao.com/#!search.php?q=iphone5s&all_cities=0&fseller=京东商城&cat=52298021&start_price=0&end_price=&hidepop=true",
-				"http://m.etao.com/#!squared9.php?datafrom=20&hidepop=true" };
 
 		String[] urlsPre = {
 				"http://wapa.etao.com/?mode=pre#!/entry/index.php?hidepop=true",
 				"http://wapa.etao.com/?mode=pre#!/zdm/index.php?hidepop=true",
-				"http://wapa.etao.com/?mode=pre#!/item/index.php?nid=35365773669&hidepop=true",
-				"http://wapa.etao.com/?mode=pre#!/myetao/index.php?hidepop=true",
-				"http://wapa.etao.com/?mode=pre#!/myetao/myjfb.php?hidepop=true",
-				"http://wapa.etao.com/?mode=pre#!/myetao/myquan.php?hidepop=true",
-				"http://wapa.etao.com/?mode=pre#!/youhui/sign_only.php?hidepop=true",
 				"http://wapa.etao.com/?mode=pre#!/free99/index.php?hidepop=true",
-				"http://wapa.etao.com/?mode=pre#!/youhui/index.php?feedid=26282&hidepop=true",
+				"http://wapa.etao.com/?mode=pre#!/item/index.php?nid=35365773669&hidepop=true",
 				"http://wapa.etao.com/?mode=pre#!/search/index.php?hidepop=true",
 				"http://wapa.etao.com/?mode=pre#!/search/search.php?q=iphone5s&hidepop=true",
-				"http://wapa.etao.com/?mode=pre#!/search/search.php?q=iphone5s&all_cities=0&fseller=京东商城&cat=52298021&start_price=0&end_price=8891&hidepop=true",
-				"http://wapa.etao.com/?mode=pre#!/squared9/index.php?datafrom=20&hidepop=true" };
+				"http://wapa.etao.com/?mode=pre#!/search/search.php?q=iphone5s&all_cities=0&fseller=%E4%BA%AC%E4%B8%9C%E5%95%86%E5%9F%8E&cat=52298021&start_price=0&end_price=8891&hidepop=true",
+				// "http://wapa.etao.com/?mode=pre#!/search/search.php?q=iphone5s&all_cities=0&fseller=京东商城&cat=52298021&start_price=0&end_price=8891&hidepop=true",
+				"http://wapa.etao.com/?mode=pre#!/squared9/index.php?datafrom=20&hidepop=true",
+				"http://wapa.etao.com/?mode=pre#!/youhui/sign_only.php?hidepop=true",
+				"http://wapa.etao.com/?mode=pre#!/youhui/index.php?feedid=26282&hidepop=true"
+		// "http://wapa.etao.com/?mode=pre#!/myetao/index.php?hidepop=true",
+		// "http://wapa.etao.com/?mode=pre#!/myetao/myjfb.php?hidepop=true",
+		// "http://wapa.etao.com/?mode=pre#!/myetao/myquan.php?hidepop=true",
+		};
 
 		// /**
 		// * 线上登陆
@@ -102,13 +95,16 @@ public class TraverseUrlsTest implements Runnable {
 		/**
 		 * 预发测试
 		 */
+		// init();
 		for (String url : urlsPre) {
+			init();
 			driver.get(url);
 			Util.sleep();
 			Util.record(driver, deviceId);
-			Util.sleep();
+			// driver.close();
+			destroy();
 		}
-
+		// driver.close();
 	}
 
 	public void destroy() {
@@ -118,7 +114,6 @@ public class TraverseUrlsTest implements Runnable {
 
 	@Override
 	public synchronized void run() {
-		init();
 		try {
 
 			testUrls();
@@ -126,7 +121,6 @@ public class TraverseUrlsTest implements Runnable {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		destroy();
 
 	}
 }

@@ -122,11 +122,11 @@ public class Util {
 		printTitle(driver, deviceId);
 		// GenerateImage(driver, deviceId);
 		screenShot(driver, deviceId);
-		sleep();
+		// sleep();
 	}
 
 	public static void sleep() {
-		for (int i = 0; i < 2e9; i++) {
+		for (int i = 0; i < 1e9; i++) {
 		}
 	}
 
@@ -338,7 +338,7 @@ public class Util {
 		/**
 		 * url(去除非法字符)+时间戳 命名图片
 		 */
-		String imgName = url.replaceAll("[\\/:*?\"<>|!#]", "") + "_"
+		String imgName = url.replaceAll("[\\/%:*?\"<>|!#]", "") + "_"
 				+ timeChamp + ".jpeg";
 
 		String imgFullPathName = imgPath + imgName;

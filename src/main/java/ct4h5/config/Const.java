@@ -36,6 +36,7 @@ public class Const {
 	final public static String packageEtaoH5Path = "ct4etaoh5.test";
 	final public static String packageEtaoH5PathC = "ct4etaoh5.testc";
 	final public static String packageTaobaoH5Path = "ct4taobaoh5.test";
+	public static final String reportPath = "http://10.73.72.185:88/report.html?run_stamp=";
 	public static String timestamp = (new SimpleDateFormat("yyyyMMddhhmmss"))
 			.format(new Date());
 	/**
