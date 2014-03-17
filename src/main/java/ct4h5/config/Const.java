@@ -36,7 +36,8 @@ public class Const {
 	final public static String packageEtaoH5Path = "ct4etaoh5.test";
 	final public static String packageEtaoH5PathC = "ct4etaoh5.testc";
 	final public static String packageTaobaoH5Path = "ct4taobaoh5.test";
-	public static final String reportPath = "http://10.73.72.185:88/report.html?run_stamp=";
+	public static final String reportPath = "http://127.0.0.1:88/report.html?run_stamp=";
+	public static final String urlLottoryPre = "http://activity.wapa.etao.com/lottery-tenmin.php";
 	public static String timestamp = (new SimpleDateFormat("yyyyMMddhhmmss"))
 			.format(new Date());
 	/**
@@ -57,4 +58,5 @@ public class Const {
 
 	public static String free99OnlineUrl = "http://m.etao.com/index.php#!free99.php?hidepop=true";
 	public static String free99PreUrl = "http://wapa.etao.com/?mode=pre#!/free99/index.php?hidepop=true";
+	public static String urlTaoBaoPre = "http://s.waptest.taobao.com/search.htm?from=1&q=%E8%BF%9E%E8%A1%A3%E8%A3%99";
 }

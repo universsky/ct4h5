@@ -121,6 +121,7 @@ public class Util {
 
 		printTitle(driver, deviceId);
 		// GenerateImage(driver, deviceId);
+		sleep();
 		screenShot(driver, deviceId);
 		// sleep();
 	}
