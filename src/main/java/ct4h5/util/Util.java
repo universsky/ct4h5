@@ -346,7 +346,6 @@ public class Util {
 		String imgSrcPath = Const.photoSrcPath + deviceId + "/" + imgName;
 
 		InsertDB.insert(Const.timestamp, url, imgName, deviceId, timeChamp);
-		//
 		// /**
 		// * 生成报告
 		// */
@@ -369,9 +368,20 @@ public class Util {
 		String pullScreenShotCmd = "adb -s " + deviceId
 				+ " pull /sdcard/screenshot.png " + imgFullPathName;
 		String rmScreenShotCmd = "rm -f /sdcard/screenshot.png";
-		excuCmd(screencapCmd);
+		// adb -s <deviceID> shell /system/bin/screencap -p
+		// sdcard/screenshot.png
+		excuCmd(screencapCmd);// use adb shell /system/bin/screencap
+		// driver.getScreenshotAs(OutputType.FILE);
 		excuCmd(pullScreenShotCmd);
+		// upload server
+		FileUpload fu = new FileUpload();
+		try {
+			fu.send(Const.upLoadUrl, imgFullPathName);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		excuCmd(rmScreenShotCmd);
+
 		return true;
 		// Process process = null;
 		// try {

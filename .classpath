@@ -56,11 +56,6 @@
 	<classpathentry kind="lib" path="lib/selenium-2.39.0/libs/xml-apis-1.4.01.jar"/>
 	<classpathentry kind="lib" path="lib/selenium-2.39.0/selenium-java-2.39.0-srcs.jar"/>
 	<classpathentry kind="lib" path="lib/selenium-2.39.0/selenium-java-2.39.0.jar" sourcepath="lib/selenium-2.39.0/selenium-java-2.39.0-srcs.jar"/>
-	<classpathentry excluding="**" kind="src" output="target/test-classes" path="src/test/resources">
-		<attributes>
-			<attribute name="maven.pomderived" value="true"/>
-		</attributes>
-	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.m2e.MAVEN2_CLASSPATH_CONTAINER">
 		<attributes>
 			<attribute name="maven.pomderived" value="true"/>
