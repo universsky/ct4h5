@@ -23,17 +23,17 @@ public class ATestRunner {
 	 * @throws Exception
 	 */
 	public static void main(String[] args) throws Exception {
-		for (;;)
-			Go();
+		// for (;;)
+		Go();
 
 	}
 
 	private static void Go() {
 		long start = System.currentTimeMillis();
 		multiThreadRunTraverseUrlsTest();
-		multiThreadRunNineTest();
-		multiThreadRunSearchTest();
-		multiThreadRunLottoryTest();
+		// multiThreadRunNineTest();
+		// multiThreadRunSearchTest();
+		// multiThreadRunLottoryTest();
 		long end = System.currentTimeMillis();
 		report(start, end);
 

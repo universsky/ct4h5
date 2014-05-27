@@ -13,6 +13,8 @@ import ct4h5.util.LThread;
 import ct4h5.util.Util;
 
 /**
+ * Multi-Thread
+ * 
  * @author 东海陈光剑 2014年2月17日 下午8:58:02
  */
 public class TestRunner {

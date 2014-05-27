@@ -29,7 +29,7 @@ public class Const {
 	/**
 	 * WebDriver server包的路径
 	 */
-	final public static String apkPath = "D:/Android/ct4h5/android-server.apk";
+	final public static String apkPath = "android-server.apk";
 	/**
 	 * Test类所在的package路径
 	 */
@@ -39,6 +39,25 @@ public class Const {
 	public static final String reportPath = "http://10.125.1.58:88/h5report.html?run_stamp=";
 	public static final String urlLottoryPre = "http://activity.wapa.etao.com/lottery-tenmin.php";
 	public static final String upLoadUrl = "http://10.125.1.58:8888/UploadServlet/upload";
+	public static final String[] urlsPreEtao = {
+			"http://wapa.etao.com/?mode=pre#!/entry/index.php?hidepop=true",
+			"http://wapa.etao.com/?mode=pre#!/zdm/index.php?hidepop=true",
+			"http://wapa.etao.com/?mode=pre#!/free99/index.php?hidepop=true",
+			"http://wapa.etao.com/?mode=pre#!/item/index.php?nid=35365773669&hidepop=true",
+			"http://wapa.etao.com/?mode=pre#!/search/index.php?hidepop=true",
+			"http://wapa.etao.com/?mode=pre#!/search/search.php?q=iphone5s&hidepop=true",
+			"http://wapa.etao.com/?mode=pre#!/search/search.php?q=iphone5s&all_cities=0&fseller=%E4%BA%AC%E4%B8%9C%E5%95%86%E5%9F%8E&cat=52298021&start_price=0&end_price=8891&hidepop=true",
+			// "http://wapa.etao.com/?mode=pre#!/search/search.php?q=iphone5s&all_cities=0&fseller=京东商城&cat=52298021&start_price=0&end_price=8891&hidepop=true",
+			"http://wapa.etao.com/?mode=pre#!/squared9/index.php?datafrom=20&hidepop=true",
+			"http://wapa.etao.com/?mode=pre#!/youhui/sign_only.php?hidepop=true",
+			"http://wapa.etao.com/?mode=pre#!/youhui/index.php?feedid=26282&hidepop=true" };
+	public static final String[] urlsPreTaoBao = {
+			"http://daily.m.admin.search.taobao.com/h5?q=%E6%9C%BA%E7%A5%A8",
+			"http://daily.m.admin.search.taobao.com/h5?q=%E6%9D%8E%E5%AE%81",
+			"http://daily.m.admin.search.taobao.com/h5?q=%E5%BD%A9%E7%A5%A8",
+			"http://daily.m.admin.search.taobao.com/h5?q=kindle",
+			"http://daily.m.admin.search.taobao.com/h5?q=%E8%A1%A3%E6%9C%8D%20%E5%A5%B3%E8%A3%85&sst=1&m=api4h5&n=20&buying=buyitnow&style=mid&DN=1&atype=1&searchfrom=1",
+			"http://daily.m.admin.search.taobao.com/h5?abtestTarget=3&q=%E8%BF%9E%E8%A1%A3%E8%A3%99" };
 	public static String timestamp = (new SimpleDateFormat("yyyyMMddhhmmss"))
 			.format(new Date());
 	/**

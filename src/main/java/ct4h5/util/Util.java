@@ -118,12 +118,9 @@ public class Util {
 		/**
 		 * 考虑到页面加载的时间，线程延时2s
 		 */
-
 		printTitle(driver, deviceId);
-		// GenerateImage(driver, deviceId);
 		sleep();
 		screenShot(driver, deviceId);
-		// sleep();
 	}
 
 	public static void sleep() {
@@ -339,27 +336,18 @@ public class Util {
 		/**
 		 * url(去除非法字符)+时间戳 命名图片
 		 */
-		String imgName = url.replaceAll("[\\/%:*?\"<>|!#]", "") + "_"
+
+		String imgName = Const.timestamp + "$" + deviceId + "$" + timeChamp
+				+ "$" + url.replaceAll("[\\/%:*?\"<>|!#]", "") + "_"
 				+ timeChamp + ".jpeg";
 
 		String imgFullPathName = imgPath + imgName;
 		String imgSrcPath = Const.photoSrcPath + deviceId + "/" + imgName;
 
 		InsertDB.insert(Const.timestamp, url, imgName, deviceId, timeChamp);
-		// /**
-		// * 生成报告
-		// */
-		// StringBuffer reportUrl = GenerateReport.genReportUrl(driver,
-		// deviceId,
-		// imgSrcPath);
-		// Const.report.append(reportUrl + "</tr>" + "<tr><th scope=\"row\">"
-		// + deviceId + "</th>");
-		// StringBuffer reportImgSrc = GenerateReport.genReportImgSrc(driver,
-		// deviceId, imgSrcPath);
-		// Const.report.append(reportImgSrc + "</tr>" + "</table>");
 
 		/**
-		 * >adb -s <deviceID> shell /system/bin/screencap -p
+		 * screencap >adb -s <deviceID> shell /system/bin/screencap -p
 		 * /sdcard/screenshot.png >adb -s <deviceID> pull /sdcard/screenshot.png
 		 * d:/screenshot.png
 		 */
@@ -373,8 +361,14 @@ public class Util {
 		excuCmd(screencapCmd);// use adb shell /system/bin/screencap
 		// driver.getScreenshotAs(OutputType.FILE);
 		excuCmd(pullScreenShotCmd);
+
+		/**
+		 * upload img to server <img src=
+		 * "http://10.125.1.58:88/img/20140527015503$096b3760$20140527015734$httpwapa.etao.commode=preentryindex.phphidepop=true_20140527015734.jpeg"
+		 */
 		// upload server
 		FileUpload fu = new FileUpload();
+
 		try {
 			fu.send(Const.upLoadUrl, imgFullPathName);
 		} catch (IOException e) {
