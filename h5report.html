@@ -1,0 +1,107 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>H5适配测试报告</title>
+    <script src="http://g.tbcdn.cn/kissy/k/1.4.0/seed-min.js"></script>
+</head>
+<body>
+	<h1 align="center">H5适配测试报告</h1>
+	
+	          <p align="right">
+                <label for="issue_issue_author_id">作者:</label>
+				 <a href="/user/userdetail.htm?userId=413419" id="current_user_a" target="_self" user_id="413419">陈光剑</a>
+                 <a href="http://www.taobao.com/webww/ww.php?ver=3&amp;touid=universsky1&amp;siteid=cntaobao&amp;status=2&amp;charset=utf-8" class="inline-item" target="_blank" title="universsky1"><img alt="universsky1" border="0" src="http://amos.alicdn.com/realonline.aw?v=2&amp;uid=universsky1&amp;site=cntaobao&amp;s=2&amp;charset=utf-8" /></a><a href="http://amos.alicdn.com/msg.aw?v=2&amp;uid=universsky1&amp;site=cnalichn&amp;s=11&amp;charset=UTF-8" class="inline-item" target="_blank" title="universsky1"></a>
+              </p>
+	
+	<div id=time align="right"></div>
+<script>setInterval("time.innerHTML='今天是'+new Date().toLocaleString()+' 星期'+'日一二三四五六'.charAt(new Date().getDay())+' ';",1000);</script>
+	
+	
+<script>
+KISSY.ready(function(S){
+    var path="http://10.125.1.58:88/img/";
+    var href = location.href;
+    var m, val;
+    m = href.match(/stamp=(\d{14})/);
+   //val = m[1] ? m[1] : "20140302023811";
+    val = m[1];
+    /**
+		 * 调用系统默认浏览器打开链接 Apache httpd
+		 * http://127.0.0.1:88/report.html?run_stamp=20140302023811
+		 * &sec=250&min=4
+		 */
+		 
+		var sec ;
+		sec = href.match(/sec=(\d+)/);
+    se = sec[1];
+    
+    var min;
+    min = href.match(/min=(\d+)/);
+    mi = min[1];
+    
+    /* 请求报告资源接口,tomcat在8888端口监听 */
+    S.use("node,io", function(S, Node, IO){
+        IO({
+            url: "http://10.125.1.58:8888/Report/go?run_stamp=" + val,
+            dataType: "jsonp",
+            jsonpCallback: "report",
+            success: function(data) {
+                var report=data;
+                var bodyContent="<p>开始时间:" + val +"</p>";
+                bodyContent = bodyContent + "<p>运行时间: " + se + "s ( " + mi + " min ) </p>";
+                 bodyContent = bodyContent +  "<hr noshade size=5 align=center width=100% />";
+                 bodyContent = bodyContent +  "<table style=\"table-layout:fixed\" border=\"0\">";
+                /*表格总开始*/
+
+                // 遍历DeviceID
+                for (var i = 0; i < report.result.length; i++) {
+
+                    bodyContent=bodyContent+"<tr><td width=\"80\" scope=\"col\">deviceId/urls</td>";
+                    for (var j = 0; j < report.result[i].img_timestamp.length; j++) {
+                        
+                        bodyContent = bodyContent+"<td style=\"word-break : break-all; overflow:hidden;\" width=\"100\" scope=\"col\"><a href=\""+report.result[i].url[j]+"\">"+report.result[i].url[j]+"</a></td>";
+                        
+                    }
+
+                    bodyContent = bodyContent+"</tr>";
+                        /*以上是urls行*/
+
+                        /*下面是imgsrc行*/
+                    bodyContent = bodyContent+ "<tr><td scope=\"row\">"+report.result[i].device_id + "</td>";
+                    for (var j = 0; j < report.result[i].img_timestamp.length; j++) {
+					
+					/*
+					  bodyContent = bodyContent+ 
+							"<td><a href=\""+  imgsrc_url +"\"><img src=\"" +imgsrc_url+
+							"\" width=\"200\" height=\"300\"></td>";
+					*/
+					imgsrc_url = path + report.result[i].img_name[j];
+                            bodyContent = bodyContent+ 
+							"<td><a href=\""+  imgsrc_url +"\"><img src=\"" + imgsrc_url +
+							"\" width=\"200\" height=\"300\"></a></td>";
+                    }
+                    bodyContent = bodyContent+"</tr>";  
+                };
+
+
+
+                /********************************************************************************************************************/
+
+                /*总表格结束*/
+
+                bodyContent=bodyContent+"</table>";
+
+                /*输出总的报告*/
+                 
+                    // document.write("<html><head><title>适配测试报告 " + report.run_stamp + "</title></head><body>" + bodyContent);
+                // 　　document.write("</body></html>");
+                S.one("body").append(bodyContent);
+
+            }
+        })
+    });
+});
+</script>
+</body>
+</html>
