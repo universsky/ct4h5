@@ -340,18 +340,19 @@ public class Util {
 		 * /sdcard/screenshot.png >adb -s <deviceID> pull /sdcard/screenshot.png
 		 * d:/screenshot.png
 		 */
-		// String screencapCmd = "adb -s " + deviceId
-		// + " shell /system/bin/screencap -p  /sdcard/screenshot.png";
-		// String pullScreenShotCmd = "adb -s " + deviceId
-		// + " pull /sdcard/screenshot.png " + imgFullPathName;
-		// String rmScreenShotCmd = "rm -f /sdcard/screenshot.png";
-		// // adb -s <deviceID> shell /system/bin/screencap -p
-		// // sdcard/screenshot.png
-		// excuCmd(screencapCmd);// use adb shell /system/bin/screencap
-		// driver.getScreenshotAs(OutputType.FILE);
-		takeScreenShot(driver, imgFullPathName);
+		String screencapCmd = "adb -s " + deviceId
+				+ " shell /system/bin/screencap -p  /sdcard/screenshot.png";
+		String pullScreenShotCmd = "adb -s " + deviceId
+				+ " pull /sdcard/screenshot.png " + imgFullPathName;
+		String rmScreenShotCmd = "rm -f /sdcard/screenshot.png";
+		// adb -s <deviceID> shell /system/bin/screencap -p
+		// sdcard/screenshot.png
+		excuCmd(screencapCmd);// use adb shell /system/bin/screencap
+		excuCmd(pullScreenShotCmd);
 
-		// excuCmd(pullScreenShotCmd);
+		// driver.getScreenshotAs(OutputType.FILE);
+		String href_imgFullPathName = imgPath + "_href_" + imgName;
+		takeScreenShot(driver, href_imgFullPathName);
 
 		/**
 		 * upload img to server <img src=
@@ -362,6 +363,8 @@ public class Util {
 
 		try {
 			fu.send(Const.upLoadUrl, imgFullPathName);
+			fu.send(Const.upLoadUrl, href_imgFullPathName);
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
