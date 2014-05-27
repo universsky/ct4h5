@@ -149,16 +149,6 @@ public class Util {
 	 */
 	public static void click(AndroidDriver driver, String xPath)
 			throws InterruptedException {
-		// int i = 0;
-		// /**
-		// * 最多等待5s
-		// */
-		// while (!driver.findElement(By.xpath(xPath)).isDisplayed() && i < 10)
-		// {
-		// Thread.sleep(500);
-		// i++;
-		// }
-		// driver.getTouch().down(x, y);
 		driver.findElement(By.xpath(xPath)).click();
 		// driver.wait();// 报错：java.lang.IllegalMonitorStateException
 		sleep();
@@ -168,13 +158,13 @@ public class Util {
 	 * 截图
 	 * 
 	 * @param driver
-	 * @param imgName
+	 * @param imgFullPathName
 	 */
-	public void takeScreenShot(WebDriver driver, String imgName) {
+	public static void takeScreenShot(WebDriver driver, String imgFullPathName) {
 		File scrFile = ((TakesScreenshot) driver)
 				.getScreenshotAs(OutputType.FILE);
 		try {
-			FileUtils.copyFile(scrFile, new File("D:\\img\\" + imgName));
+			FileUtils.copyFile(scrFile, new File(imgFullPathName));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -267,49 +257,48 @@ public class Util {
 		}
 	}
 
-	// @SuppressWarnings("deprecation")
-	// public static boolean GenerateImage(AndroidDriver driver) {//
-	// 对字节数组字符串进行Base64解码并生成图片
-	//
-	// String url = driver.getCurrentUrl();
-	// System.out.println("截图 | " + url);
-	// String imgStr = driver.getScreenshotAs(OutputType.BASE64);
-	// String imgPath = Const.photoSavePath + "/";
-	// String timeChamp = (new SimpleDateFormat("yyyy-MM-dd-hh-mm-ss"))
-	// .format(new Date());
-	// /**
-	// * url(去除非法字符)+时间戳 命名图片
-	// */
-	// String imgName = url.replaceAll("[\\/:*?\"<>|]", "") + "-" + timeChamp
-	// + ".jpeg";
-	// if (imgStr == null)
-	// // 图像数据为空
-	// return false;
-	// BASE64Decoder decoder = new BASE64Decoder();
-	// try {
-	// // Base64解码
-	// byte[] bytes = decoder.decodeBuffer(imgStr);
-	// for (int i = 0; i < bytes.length; ++i) {
-	// if (bytes[i] < 0) {// 调整异常数据
-	// bytes[i] += 256;
-	// }
-	// }
-	// // 生成jpeg图片
-	// File f = new File(imgPath);
-	// if (!f.isDirectory())
-	// f.mkdir();
-	// if (!imgPath.endsWith("/"))
-	// imgPath += "/";
-	// String imgFullPathName = imgPath + imgName;
-	// OutputStream out = new FileOutputStream(imgFullPathName);
-	// out.write(bytes);
-	// out.flush();
-	// out.close();
-	// return true;
-	// } catch (Exception e) {
-	// return false;
-	// }
-	// }
+	@SuppressWarnings("deprecation")
+	public static boolean GenerateImage(AndroidDriver driver) {
+		// 对字节数组字符串进行Base64解码并生成图片
+		String url = driver.getCurrentUrl();
+		System.out.println("截图 | " + url);
+		String imgStr = driver.getScreenshotAs(OutputType.BASE64);
+		String imgPath = Const.photoSavePath + "/";
+		String timeChamp = (new SimpleDateFormat("yyyy-MM-dd-hh-mm-ss"))
+				.format(new Date());
+		/**
+		 * url(去除非法字符)+时间戳 命名图片
+		 */
+		String imgName = url.replaceAll("[\\/:*?\"<>|]", "") + "-" + timeChamp
+				+ ".jpeg";
+		if (imgStr == null)
+			// 图像数据为空
+			return false;
+		BASE64Decoder decoder = new BASE64Decoder();
+		try {
+			// Base64解码
+			byte[] bytes = decoder.decodeBuffer(imgStr);
+			for (int i = 0; i < bytes.length; ++i) {
+				if (bytes[i] < 0) {// 调整异常数据
+					bytes[i] += 256;
+				}
+			}
+			// 生成jpeg图片
+			File f = new File(imgPath);
+			if (!f.isDirectory())
+				f.mkdir();
+			if (!imgPath.endsWith("/"))
+				imgPath += "/";
+			String imgFullPathName = imgPath + imgName;
+			OutputStream out = new FileOutputStream(imgFullPathName);
+			out.write(bytes);
+			out.flush();
+			out.close();
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
+	}
 
 	@SuppressWarnings({ "restriction", "unused" })
 	public static boolean screenShot(AndroidDriver driver, String deviceId) {// 对字节数组字符串进行Base64解码并生成图片
@@ -351,16 +340,18 @@ public class Util {
 		 * /sdcard/screenshot.png >adb -s <deviceID> pull /sdcard/screenshot.png
 		 * d:/screenshot.png
 		 */
-		String screencapCmd = "adb -s " + deviceId
-				+ " shell /system/bin/screencap -p  /sdcard/screenshot.png";
-		String pullScreenShotCmd = "adb -s " + deviceId
-				+ " pull /sdcard/screenshot.png " + imgFullPathName;
-		String rmScreenShotCmd = "rm -f /sdcard/screenshot.png";
-		// adb -s <deviceID> shell /system/bin/screencap -p
-		// sdcard/screenshot.png
-		excuCmd(screencapCmd);// use adb shell /system/bin/screencap
+		// String screencapCmd = "adb -s " + deviceId
+		// + " shell /system/bin/screencap -p  /sdcard/screenshot.png";
+		// String pullScreenShotCmd = "adb -s " + deviceId
+		// + " pull /sdcard/screenshot.png " + imgFullPathName;
+		// String rmScreenShotCmd = "rm -f /sdcard/screenshot.png";
+		// // adb -s <deviceID> shell /system/bin/screencap -p
+		// // sdcard/screenshot.png
+		// excuCmd(screencapCmd);// use adb shell /system/bin/screencap
 		// driver.getScreenshotAs(OutputType.FILE);
-		excuCmd(pullScreenShotCmd);
+		takeScreenShot(driver, imgFullPathName);
+
+		// excuCmd(pullScreenShotCmd);
 
 		/**
 		 * upload img to server <img src=
@@ -374,47 +365,9 @@ public class Util {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		excuCmd(rmScreenShotCmd);
+		// excuCmd(rmScreenShotCmd);
 
 		return true;
-		// Process process = null;
-		// try {
-		// process = Runtime.getRuntime().exec(screencapCmd);
-		// BufferedReader br = new BufferedReader(new InputStreamReader(
-		// process.getInputStream(), "utf-8"));
-		// String buff = "";
-		// String imgStr = "";
-		// while ((buff = br.readLine()) != null) {
-		// Util.print(buff);
-		// imgStr += buff;
-		// }
-		//
-		// if (imgStr == null) // 图像数据为空
-		// return false;
-		// BASE64Decoder decoder = new BASE64Decoder();
-		//
-		// // Base64解码
-		// byte[] bytes = decoder.decodeBuffer(imgStr);
-		// for (int i = 0; i < bytes.length; ++i) {
-		// if (bytes[i] < 0) {// 调整异常数据
-		// bytes[i] += 256;
-		// }
-		// }
-		// // 生成jpeg图片
-		// File f1 = new File(imgPath);
-		// if (!f1.isDirectory())
-		// f1.mkdir();
-		// if (!imgPath.endsWith("/"))
-		// imgPath += "/";
-		// OutputStream out = new FileOutputStream(imgFullPathName);
-		// out.write(bytes);
-		// out.flush();
-		// out.close();
-		// return true;
-		// } catch (Exception e) {
-		// e.printStackTrace();
-		// return false;
-		// }
 
 	}
 
@@ -433,9 +386,6 @@ public class Util {
 					process.getInputStream(), "utf-8"));
 			while ((buff = br.readLine()) != null) {
 				Util.print(buff);
-				// if (buff.contains("INSTALL_FAILED_ALREADY_EXISTS")) {
-				// Util.print(devName + "已安装");
-				// }
 			}
 			br.close();
 		} catch (IOException e) {
